@@ -3,8 +3,8 @@ package handlers
 import (
 	"net/http"
 
-	"bulletin/internal/middleware"
-	"bulletin/internal/models"
+	"github.com/ThatAutocrat/bulletin-board/internal/middleware"
+	"github.com/ThatAutocrat/bulletin-board/internal/models"
 	"golang.org/x/crypto/bcrypt"
 )
 
