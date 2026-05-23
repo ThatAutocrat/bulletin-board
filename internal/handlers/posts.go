@@ -5,8 +5,8 @@ import (
 	"strconv"
 	"time"
 
-	"bulletin/internal/middleware"
-	"bulletin/internal/models"
+	"github.com/ThatAutocrat/bulletin-board/internal/middleware"
+	"github.com/ThatAutocrat/bulletin-board/internal/models"
 )
 
 func (a *App) Home(w http.ResponseWriter, r *http.Request) {
