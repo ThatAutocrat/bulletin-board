@@ -33,7 +33,7 @@ CREATE TABLE IF NOT EXISTS rsvps (
   post_id INTEGER REFERENCES posts(id) ON DELETE CASCADE,
   user_id INTEGER REFERENCES users(id) ON DELETE CASCADE,
   status TEXT NOT NULL CHECK(status IN ('going','maybe','not_going')),
-  UNIQUE(post_id, user_id)
+  UNIQUE(post_id, user_id) ON CONFLICT REPLACE
 );
 
 CREATE TABLE IF NOT EXISTS sessions (
