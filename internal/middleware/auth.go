@@ -5,7 +5,7 @@ import (
 	"database/sql"
 	"net/http"
 
-	"bulletin/internal/models"
+	"github.com/ThatAutocrat/bulletin-board/internal/models"
 )
 
 type contextKey string
