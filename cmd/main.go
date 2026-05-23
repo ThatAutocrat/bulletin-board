@@ -5,9 +5,9 @@ import (
 	"net/http"
 	"os"
 
-	"bulletin/internal/handlers"
-	"bulletin/internal/middleware"
-	"bulletin/internal/models"
+	"github.com/ThatAutocrat/bulletin-board/internal/handlers"
+	"github.com/ThatAutocrat/bulletin-board/internal/middleware"
+	"github.com/ThatAutocrat/bulletin-board/internal/models"
 
 	"github.com/go-chi/chi/v5"
 	chimw "github.com/go-chi/chi/v5/middleware"
