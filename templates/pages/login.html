@@ -1,0 +1,21 @@
+{{define "content"}}
+<div class="auth-page">
+  <div class="auth-card">
+    <h1>Welcome back</h1>
+    <p class="auth-sub">Sign in to your neighbourhood account</p>
+    {{if .Error}}<div class="alert alert-error">{{.Error}}</div>{{end}}
+    <form action="/auth/login" method="POST" class="auth-form">
+      <div class="form-group">
+        <label for="email">Email</label>
+        <input type="email" name="email" id="email" required autofocus>
+      </div>
+      <div class="form-group">
+        <label for="password">Password</label>
+        <input type="password" name="password" id="password" required>
+      </div>
+      <button type="submit" class="btn btn-primary btn-lg">Sign In</button>
+    </form>
+    <p class="auth-switch">Don't have an account? <a href="/auth/register">Join the board</a></p>
+  </div>
+</div>
+{{end}}

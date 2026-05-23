@@ -1,0 +1,54 @@
+{{define "content"}}
+<div class="form-page">
+  <h1 class="form-title">New Post</h1>
+  {{if .Error}}<div class="alert alert-error">{{.Error}}</div>{{end}}
+  <form action="/posts" method="POST" class="post-form">
+    <div class="form-group">
+      <label for="category">Category</label>
+      <select name="category" id="category" required onchange="handleCategoryChange(this.value)">
+        <option value="">Select a category</option>
+        <option value="announcement">📢 Announcement</option>
+        <option value="lost_found">🔍 Lost & Found</option>
+        <option value="event">📅 Event</option>
+        <option value="general">💬 General</option>
+      </select>
+    </div>
+
+    <div class="form-group" id="item-type-group" style="display:none">
+      <label>Item Status</label>
+      <div class="radio-group">
+        <label><input type="radio" name="item_type" value="lost"> Lost</label>
+        <label><input type="radio" name="item_type" value="found"> Found</label>
+      </div>
+    </div>
+
+    <div class="form-group" id="event-date-group" style="display:none">
+      <label for="event_date">Event Date & Time</label>
+      <input type="datetime-local" name="event_date" id="event_date">
+    </div>
+
+    <div class="form-group">
+      <label for="title">Title</label>
+      <input type="text" name="title" id="title" placeholder="What's this about?" required>
+    </div>
+
+    <div class="form-group">
+      <label for="body">Details</label>
+      <textarea name="body" id="body" rows="6" placeholder="Give your neighbours all the details..." required></textarea>
+    </div>
+
+    <div class="form-group">
+      <label for="location_tag">Location (optional)</label>
+      <input type="text" name="location_tag" id="location_tag" placeholder="e.g. Park Street, Block B">
+    </div>
+
+    <button type="submit" class="btn btn-primary btn-lg">Post to Board</button>
+  </form>
+</div>
+<script>
+function handleCategoryChange(val) {
+  document.getElementById('item-type-group').style.display = val === 'lost_found' ? 'block' : 'none';
+  document.getElementById('event-date-group').style.display = val === 'event' ? 'block' : 'none';
+}
+</script>
+{{end}}

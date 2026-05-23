@@ -1,0 +1,25 @@
+{{define "content"}}
+<div class="profile-page">
+  <div class="profile-header">
+    <div class="profile-avatar">{{slice .Post.Username 0 1}}</div>
+    <h1>{{.Post.Username}}</h1>
+    <p>{{len .Posts}} posts</p>
+  </div>
+  <div class="feed-col">
+    {{range .Posts}}
+    <article class="post-card category-{{.Category}}">
+      <div class="post-card-top">
+        <span class="category-badge {{.Category}}">{{categoryLabel .Category}}</span>
+        {{if eq .Status "resolved"}}<span class="resolved-badge">✅ Resolved</span>{{end}}
+      </div>
+      <h2 class="post-title"><a href="/posts/{{.ID}}">{{.Title}}</a></h2>
+      <div class="post-meta">
+        <span>{{formatDate .CreatedAt}}</span>
+        <span>👍 {{.Upvotes}}</span>
+        <span>💬 {{.CommentCount}}</span>
+      </div>
+    </article>
+    {{end}}
+  </div>
+</div>
+{{end}}

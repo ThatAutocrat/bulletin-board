@@ -1,0 +1,48 @@
+{{define "base"}}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The Neighbourhood Board</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body>
+  <header class="site-header">
+    <div class="container header-inner">
+      <a href="/" class="logo">📌 The Board</a>
+      <nav class="nav-links">
+        <a href="/?category=announcement">Announcements</a>
+        <a href="/?category=lost_found">Lost & Found</a>
+        <a href="/?category=event">Events</a>
+        <a href="/?category=general">General</a>
+      </nav>
+      <div class="nav-auth">
+        {{if .User}}
+          <a href="/profile/{{.User.Username}}" class="btn btn-ghost">{{.User.Username}}</a>
+          <a href="/posts/new" class="btn btn-primary">+ Post</a>
+          <form action="/auth/logout" method="POST" style="display:inline">
+            <button type="submit" class="btn btn-ghost">Logout</button>
+          </form>
+        {{else}}
+          <a href="/auth/login" class="btn btn-ghost">Login</a>
+          <a href="/auth/register" class="btn btn-primary">Join</a>
+        {{end}}
+      </div>
+    </div>
+  </header>
+
+  <main class="container main-content">
+    {{template "content" .}}
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <p>📌 The Neighbourhood Board — keeping neighbours connected</p>
+    </div>
+  </footer>
+</body>
+</html>
+{{end}}

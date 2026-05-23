@@ -1,0 +1,94 @@
+{{define "content"}}
+<div class="post-detail-layout">
+  <div class="post-detail-main">
+    <div class="post-detail-top">
+      <a href="/" class="back-link">← Back to board</a>
+      <span class="category-badge {{.Post.Category}}">{{categoryLabel .Post.Category}}</span>
+      {{if eq .Post.Category "lost_found"}}
+        <span class="item-badge {{.Post.ItemType}}">{{.Post.ItemType}}</span>
+      {{end}}
+      {{if eq .Post.Status "resolved"}}<span class="resolved-badge">✅ Resolved</span>{{end}}
+    </div>
+
+    <h1 class="post-detail-title">{{.Post.Title}}</h1>
+    <div class="post-detail-meta">
+      <span>by <a href="/profile/{{.Post.Username}}">{{.Post.Username}}</a></span>
+      <span>{{formatDate .Post.CreatedAt}}</span>
+      {{if .Post.LocationTag}}<span>📍 {{.Post.LocationTag}}</span>{{end}}
+      {{if .Post.EventDate}}<span>🗓 {{formatDateTime .Post.EventDate}}</span>{{end}}
+    </div>
+
+    <div class="post-body">{{.Post.Body}}</div>
+
+    <div class="post-actions">
+      {{if .User}}
+        <form action="/posts/{{.Post.ID}}/upvote" method="POST" style="display:inline">
+          <button class="btn btn-ghost">👍 {{.Post.Upvotes}} Upvote</button>
+        </form>
+        {{if eq .Post.UserID .User.ID}}
+          {{if eq .Post.Category "lost_found"}}
+            <form action="/posts/{{.Post.ID}}/toggle-status" method="POST" style="display:inline">
+              <button class="btn btn-ghost">
+                {{if eq .Post.Status "open"}}✅ Mark Resolved{{else}}🔄 Reopen{{end}}
+              </button>
+            </form>
+          {{end}}
+        {{end}}
+      {{else}}
+        <span class="upvote-count">👍 {{.Post.Upvotes}} upvotes</span>
+      {{end}}
+    </div>
+
+    {{if and .User (eq .Post.Category "event")}}
+    <div class="rsvp-section">
+      <h3>RSVP</h3>
+      <div class="rsvp-counts">
+        <span>✅ Going: {{.RSVP.Going}}</span>
+        <span>🤔 Maybe: {{.RSVP.Maybe}}</span>
+        <span>❌ Not Going: {{.RSVP.NotGoing}}</span>
+      </div>
+      <form action="/posts/{{.Post.ID}}/rsvp" method="POST" class="rsvp-form">
+        <button name="status" value="going" class="btn {{if eq .RSVP.UserStatus "going"}}btn-primary{{else}}btn-ghost{{end}}">✅ Going</button>
+        <button name="status" value="maybe" class="btn {{if eq .RSVP.UserStatus "maybe"}}btn-primary{{else}}btn-ghost{{end}}">🤔 Maybe</button>
+        <button name="status" value="not_going" class="btn {{if eq .RSVP.UserStatus "not_going"}}btn-primary{{else}}btn-ghost{{end}}">❌ Not Going</button>
+      </form>
+    </div>
+    {{end}}
+
+    <div class="comments-section">
+      <h3>Comments ({{len .Comments}})</h3>
+      {{range .Comments}}
+      <div class="comment">
+        <div class="comment-meta">
+          <a href="/profile/{{.Username}}">{{.Username}}</a>
+          <span>{{formatDate .CreatedAt}}</span>
+        </div>
+        <p class="comment-body">{{.Body}}</p>
+      </div>
+      {{end}}
+
+      {{if .User}}
+      <form action="/posts/{{.Post.ID}}/comment" method="POST" class="comment-form">
+        <textarea name="body" placeholder="Add a comment..." rows="3" required></textarea>
+        <button type="submit" class="btn btn-primary">Post Comment</button>
+      </form>
+      {{else}}
+      <p class="login-prompt"><a href="/auth/login">Login</a> to comment.</p>
+      {{end}}
+    </div>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-card">
+      <h3>📅 Upcoming Events</h3>
+      {{if not .UpcomingEvents}}<p class="sidebar-empty">No upcoming events</p>{{end}}
+      {{range .UpcomingEvents}}
+      <a href="/posts/{{.ID}}" class="event-item">
+        <span class="event-title">{{.Title}}</span>
+        {{if .EventDate}}<span class="event-date">{{formatDateTime .EventDate}}</span>{{end}}
+      </a>
+      {{end}}
+    </div>
+  </aside>
+</div>
+{{end}}

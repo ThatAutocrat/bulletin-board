@@ -1,0 +1,63 @@
+{{define "content"}}
+<div class="page-layout">
+  <div class="feed-col">
+    <div class="feed-header">
+      <h1 class="feed-title">
+        {{if .Category}}{{categoryLabel .Category}}{{else}}All Posts{{end}}
+      </h1>
+      {{if .User}}<a href="/posts/new" class="btn btn-primary">+ New Post</a>{{end}}
+    </div>
+
+    {{if not .Posts}}
+      <div class="empty-state">
+        <p>No posts yet. Be the first to post!</p>
+      </div>
+    {{end}}
+
+    {{range .Posts}}
+    <article class="post-card category-{{.Category}}">
+      <div class="post-card-top">
+        <span class="category-badge {{.Category}}">{{categoryLabel .Category}}</span>
+        {{if eq .Category "lost_found"}}
+          <span class="item-badge {{.ItemType}}">{{.ItemType}}</span>
+        {{end}}
+        {{if eq .Status "resolved"}}<span class="resolved-badge">✅ Resolved</span>{{end}}
+        {{if .LocationTag}}<span class="location-tag">📍 {{.LocationTag}}</span>{{end}}
+      </div>
+      <h2 class="post-title"><a href="/posts/{{.ID}}">{{.Title}}</a></h2>
+      <p class="post-excerpt">{{.Body}}</p>
+      <div class="post-meta">
+        <span>by <a href="/profile/{{.Username}}">{{.Username}}</a></span>
+        <span>{{formatDate .CreatedAt}}</span>
+        <span>👍 {{.Upvotes}}</span>
+        <span>💬 {{.CommentCount}}</span>
+        {{if .EventDate}}<span>🗓 {{formatDateTime .EventDate}}</span>{{end}}
+      </div>
+    </article>
+    {{end}}
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-card">
+      <h3>📅 Upcoming Events</h3>
+      {{if not .UpcomingEvents}}
+        <p class="sidebar-empty">No upcoming events</p>
+      {{end}}
+      {{range .UpcomingEvents}}
+      <a href="/posts/{{.ID}}" class="event-item">
+        <span class="event-title">{{.Title}}</span>
+        {{if .EventDate}}<span class="event-date">{{formatDateTime .EventDate}}</span>{{end}}
+      </a>
+      {{end}}
+    </div>
+    <div class="sidebar-card">
+      <h3>🗂 Browse by Category</h3>
+      <a href="/" class="cat-link">All Posts</a>
+      <a href="/?category=announcement" class="cat-link">📢 Announcements</a>
+      <a href="/?category=lost_found" class="cat-link">🔍 Lost & Found</a>
+      <a href="/?category=event" class="cat-link">📅 Events</a>
+      <a href="/?category=general" class="cat-link">💬 General</a>
+    </div>
+  </aside>
+</div>
+{{end}}

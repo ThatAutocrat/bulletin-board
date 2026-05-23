@@ -1,0 +1,44 @@
+CREATE TABLE IF NOT EXISTS users (
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  username TEXT UNIQUE NOT NULL,
+  email TEXT UNIQUE NOT NULL,
+  password_hash TEXT NOT NULL,
+  created_at DATETIME DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE IF NOT EXISTS posts (
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  user_id INTEGER REFERENCES users(id) ON DELETE CASCADE,
+  category TEXT NOT NULL CHECK(category IN ('announcement','lost_found','event','general')),
+  title TEXT NOT NULL,
+  body TEXT NOT NULL,
+  location_tag TEXT,
+  upvotes INTEGER DEFAULT 0,
+  status TEXT DEFAULT 'open' CHECK(status IN ('open','resolved')),
+  event_date DATETIME,
+  item_type TEXT,
+  created_at DATETIME DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE IF NOT EXISTS comments (
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  post_id INTEGER REFERENCES posts(id) ON DELETE CASCADE,
+  user_id INTEGER REFERENCES users(id) ON DELETE CASCADE,
+  body TEXT NOT NULL,
+  created_at DATETIME DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE IF NOT EXISTS rsvps (
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  post_id INTEGER REFERENCES posts(id) ON DELETE CASCADE,
+  user_id INTEGER REFERENCES users(id) ON DELETE CASCADE,
+  status TEXT NOT NULL CHECK(status IN ('going','maybe','not_going')),
+  UNIQUE(post_id, user_id)
+);
+
+CREATE TABLE IF NOT EXISTS sessions (
+  id TEXT PRIMARY KEY,
+  user_id INTEGER REFERENCES users(id) ON DELETE CASCADE,
+  created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+  expires_at DATETIME NOT NULL
+);
