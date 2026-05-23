@@ -7,8 +7,8 @@ import (
 	"path/filepath"
 	"time"
 
-	"bulletin/internal/middleware"
-	"bulletin/internal/models"
+	"github.com/ThatAutocrat/bulletin-board/internal/middleware"
+	"github.com/ThatAutocrat/bulletin-board/internal/models"
 )
 
 type App struct {
