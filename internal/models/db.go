@@ -4,11 +4,11 @@ import (
 	"database/sql"
 	"os"
 
-	_ "github.com/mattn/go-sqlite3"
+	_ "modernc.org/sqlite"
 )
 
 func InitDB(dbPath string) (*sql.DB, error) {
-	db, err := sql.Open("sqlite3", dbPath+"?_foreign_keys=on")
+	db, err := sql.Open("sqlite", dbPath+"?_foreign_keys=on")
 	if err != nil {
 		return nil, err
 	}
