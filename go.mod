@@ -1,4 +1,4 @@
-module bulletin
+module github.com/ThatAutocrat/bulletin-board
 
 go 1.22
 
