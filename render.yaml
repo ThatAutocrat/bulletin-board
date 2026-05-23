@@ -2,13 +2,15 @@ services:
   - type: web
     name: neighbourhood-board
     runtime: go
-    buildCommand: go build -o server ./cmd/main.go
-    startCommand: ./server
+    buildCommand: go mod tidy && go build -tags netgo -ldflags '-s -w' -o app
+    startCommand: ./app
     envVars:
       - key: PORT
         value: 8080
       - key: DB_PATH
         value: /data/bulletin.db
+      - key: CGO_ENABLED
+        value: "0"
     disk:
       name: sqlite-data
       mountPath: /data
