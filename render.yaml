@@ -3,18 +3,16 @@ services:
     name: neighbourhood-board
     runtime: go
     rootDir: .
-    buildCommand: go mod download && go build -tags netgo -ldflags '-s -w' -o app ./cmd/main.go
+    buildCommand: go mod tidy && go build -tags netgo -ldflags '-s -w' -o app ./cmd/main.go
     startCommand: ./app
     envVars:
       - key: PORT
         value: 8080
-      - key: DB_PATH
-        value: /data/bulletin.db
       - key: CGO_ENABLED
         value: "0"
       - key: GOFLAGS
         value: "-mod=mod"
-    disk:
-      name: sqlite-data
-      mountPath: /data
-      sizeGB: 1
+      - key: TURSO_URL
+        sync: false
+      - key: TURSO_TOKEN
+        sync: false
