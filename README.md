@@ -4,12 +4,16 @@ A community bulletin board for neighbours to share announcements, lost & found i
 
 **Live:** https://bulletin-board-tuak.onrender.com
 
+---
+
 ## Stack
 
 - **Backend:** Go + Chi router
 - **Frontend:** Go HTML templates
-- **Database:** SQLite (`modernc.org/sqlite`)
-- **Hosting:** Render (with persistent disk)
+- **Database:** [Turso](https://turso.tech) (libSQL / SQLite-compatible)
+- **Hosting:** Render (free tier)
+
+---
 
 ## Features
 
@@ -19,6 +23,8 @@ A community bulletin board for neighbours to share announcements, lost & found i
 - Mark Lost & Found items as resolved
 - Session-based auth (register, login, logout)
 - User profiles
+
+---
 
 ## Project Structure
 
@@ -35,6 +41,8 @@ bulletin/
 └── render.yaml              # Render deploy config
 ```
 
+---
+
 ## Running Locally
 
 ```bash
@@ -44,7 +52,19 @@ go mod tidy
 go run ./cmd/main.go
 ```
 
-App runs on http://localhost:8080
+App runs on http://localhost:8080. A local `bulletin.db` file will be created automatically — no setup needed.
 
+---
 
-### things to add: image uploads, search, map integration, email notifications, admin panel, or pagination. Pull requests will be merged upon approval. Happy coding!
+## Contributing
+
+Pull requests are welcome! Here are some ideas for things to add:
+
+- Image uploads
+- Search
+- Map integration
+- Email notifications
+- Admin panel
+- Pagination
+
+PRs will be reviewed and merged upon approval. Happy coding!
